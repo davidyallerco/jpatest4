@@ -20,4 +20,12 @@ public class IntegracionJpaTest {
         assertTrue(cuenta.isPresent());
         assertEquals("David", cuenta.orElseThrow(null).getPersona());
     }
+
+    @Test
+    void testFindByPersona(){
+        Optional<Cuenta> cuenta = cuentaRespository.findByPersona("David");
+        assertTrue(cuenta.isPresent());
+        assertEquals("David", cuenta.orElseThrow(null).getPersona());
+        assertEquals("1000.00", cuenta.orElseThrow(null).getSaldo().toPlainString());
+    }
 }
