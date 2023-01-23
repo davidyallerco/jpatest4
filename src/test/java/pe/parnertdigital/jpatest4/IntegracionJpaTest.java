@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import pe.parnertdigital.jpatest4.models.Cuenta;
 import pe.parnertdigital.jpatest4.repositories.CuentaRespository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -49,5 +50,20 @@ public class IntegracionJpaTest {
         assertFalse(cuentas.isEmpty());
         assertEquals(2,cuentas.size());
 
+    }
+
+    @Test
+    void testSave() {
+        //Given
+        Cuenta cuentaPepe = new Cuenta(null, "Pepe", new BigDecimal("3000"));
+        cuentaRespository.save(cuentaPepe);
+
+        //When
+        Cuenta cuenta = cuentaRespository.findByPersona("Pepe").orElseThrow(null);
+
+        //Then
+        assertEquals("Pepe", cuenta.getPersona());
+        assertEquals("3000", cuenta.getSaldo().toPlainString());
+        //assertEquals(3, cuenta.getId());//el id puede variar y puede salir resultos diferentes, no se recomienda este metodo
     }
 }
