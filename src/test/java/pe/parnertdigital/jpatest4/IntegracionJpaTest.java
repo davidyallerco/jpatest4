@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import pe.parnertdigital.jpatest4.models.Cuenta;
 import pe.parnertdigital.jpatest4.repositories.CuentaRespository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +39,15 @@ public class IntegracionJpaTest {
         assertThrows(NoSuchElementException.class, ()->{
             cuenta.orElseThrow(null);
         });*/
-        //assertThrows(NoSuchElementException.class,  cuenta::orElseThrow); //segunda forma mas reducida
+       // assertThrows(NoSuchElementException.class,  cuenta::orElseThrow); //segunda forma mas reducida
         assertFalse(cuenta.isPresent());
+    }
+
+    @Test
+    void testFindAll() {
+        List<Cuenta> cuentas = cuentaRespository.findAll();
+        assertFalse(cuentas.isEmpty());
+        assertEquals(2,cuentas.size());
+
     }
 }
