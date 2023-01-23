@@ -61,11 +61,33 @@ public class IntegracionJpaTest {
 //        Cuenta cuenta = cuentaRespository.findByPersona("Pepe").orElseThrow(null);
 //        Cuenta cuenta = cuentaRespository.findById(save.getId()).orElseThrow(null);
         Cuenta cuenta = cuentaRespository.save(cuentaPepe);
-        
+
 
         //Then
         assertEquals("Pepe", cuenta.getPersona());
         assertEquals("3000", cuenta.getSaldo().toPlainString());
         //assertEquals(3, cuenta.getId());//el id puede variar y puede salir resultos diferentes, no se recomienda este metodo
     }
+
+
+    @Test
+    void testUpdate() {
+        //Given
+        Cuenta cuentaPepe = new Cuenta(null, "Pepe", new BigDecimal("3000"));
+
+        //When
+        Cuenta cuenta = cuentaRespository.save(cuentaPepe);
+
+
+        //Then
+        assertEquals("Pepe", cuenta.getPersona());
+        assertEquals("3000", cuenta.getSaldo().toPlainString());
+        //When
+        cuenta.setSaldo(new BigDecimal("3800"));
+        Cuenta cuentaActualizada = cuentaRespository.save(cuenta);
+        //Then
+        assertEquals("Pepe", cuentaActualizada.getPersona());
+        assertEquals("3800", cuentaActualizada.getSaldo().toPlainString());
+    }
+
 }
