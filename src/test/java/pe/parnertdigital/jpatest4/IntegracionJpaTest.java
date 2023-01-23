@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import pe.parnertdigital.jpatest4.models.Cuenta;
 import pe.parnertdigital.jpatest4.repositories.CuentaRespository;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,5 +28,17 @@ public class IntegracionJpaTest {
         assertTrue(cuenta.isPresent());
         assertEquals("David", cuenta.orElseThrow(null).getPersona());
         assertEquals("1000.00", cuenta.orElseThrow(null).getSaldo().toPlainString());
+    }
+
+    @Test
+    void testFindByPersonaThrowException(){
+        Optional<Cuenta> cuenta = cuentaRespository.findByPersona("Davidxxxxxxx");
+        //primera forma
+        /*
+        assertThrows(NoSuchElementException.class, ()->{
+            cuenta.orElseThrow(null);
+        });*/
+        //assertThrows(NoSuchElementException.class,  cuenta::orElseThrow); //segunda forma mas reducida
+        assertFalse(cuenta.isPresent());
     }
 }
