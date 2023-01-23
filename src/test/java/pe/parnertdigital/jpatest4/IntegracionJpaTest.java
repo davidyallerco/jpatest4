@@ -56,11 +56,12 @@ public class IntegracionJpaTest {
     void testSave() {
         //Given
         Cuenta cuentaPepe = new Cuenta(null, "Pepe", new BigDecimal("3000"));
-        Cuenta save = cuentaRespository.save(cuentaPepe);
 
         //When
 //        Cuenta cuenta = cuentaRespository.findByPersona("Pepe").orElseThrow(null);
-        Cuenta cuenta = cuentaRespository.findById(save.getId()).orElseThrow(null);
+//        Cuenta cuenta = cuentaRespository.findById(save.getId()).orElseThrow(null);
+        Cuenta cuenta = cuentaRespository.save(cuentaPepe);
+        
 
         //Then
         assertEquals("Pepe", cuenta.getPersona());
